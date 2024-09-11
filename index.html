@@ -2,9 +2,106 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redireccionando...</title>
+    <title>Cotización de Stand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Avrile+Serif:wght@300&family=Bitter:wght@400;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Bitter', serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .form-section {
+            flex: 2;
+        }
+
+        .summary-section {
+            flex: 1;
+            background-color: hsl(134, 100%, 30%);
+            border-radius: 10px;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .summary-section h2 {
+            font-family: 'Bitter', serif;
+            font-weight: 800;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-family: 'Bitter', serif;
+            font-weight: 800;
+            color: #000;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            font-family: 'Bitter', serif;
+            margin-bottom: 10px;
+        }
+
+        input, select, textarea {
+            flex: 1;
+            padding: 8px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Bitter', serif;
+        }
+
+        .total-cost {
+            font-size: 42px;
+            font-family: 'Bitter', serif;
+            font-weight: 800;
+            margin: 20px 0;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Bitter', serif;
+        }
+
+        .contact-buttons button:first-child {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .contact-buttons button:last-child {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #333;
+        }
+    </style>
     <script>
         function calcularCosto() {
             const preciosMaterial = {
@@ -86,13 +183,90 @@
             - Piso: ${piso}
             `;
 
-            const url = `https://wa.me/573028618806?
-text=${encodeURIComponent(mensaje)}`;
+            const url = `https://wa.me/573028618806?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
+
+        // Actualizar el costo automáticamente
+        document.addEventListener('input', calcularCosto);
+
+        window.onload = function() {
+            // Establecer el material predeterminado en madera
+            document.getElementById("material").value = "madera";
+            calcularCosto();
+        };
     </script>
+
 </head>
 <body>
-    <p>Redireccionando a WhatsApp...</p>
+    <div class="container">
+        <div class="form-section">
+            <h1>COTIZA TU STAND</h1>
+            <form id="cotizadorForm">
+                <label for="ancho">Ancho (metros):
+                    <input type="number" id="ancho" name="ancho" step="0.1" placeholder="Ingrese el ancho" required>
+                </label>
+
+                <label for="alto">Alto (metros):
+                    <input type="number" id="alto" name="alto" step="0.1" placeholder="Ingrese el alto" required>
+                </label>
+
+                <label for="material">Seleccione el material:
+                    <select id="material" name="material">
+                        <option value="madera">Madera ($1,000,000 COP/m²)</option>
+                        <option value="carton">Cartón ($800,000 COP/m²)</option>
+                        <option value="metal">Metal ($600,000 COP/m²)</option>
+                    </select>
+                </label>
+
+                <label for="luces">Luces:
+                    <select id="luces" name="luces">
+                        <option value="">Selecciona tipo de luces</option>
+                        <option value="lucesBasicas">Luces Básicas ($200,000 COP)</option>
+                        <option value="lucesLED">Luces LED ($300,000 COP)</option>
+                        <option value="lucesRGB">Luces RGB ($500,000 COP)</option>
+                    </select>
+                </label>
+
+                <label for="pantallas">Pantallas:
+                    <select id="pantallas" name="pantallas">
+                        <option value="">Selecciona tamaño de pantalla</option>
+                        <option value="pantalla32">Pantalla 32" ($1,000,000 COP)</option>
+                        <option value="pantalla50">Pantalla 50" ($1,500,000 COP)</option>
+                    </select>
+                </label>
+
+                <h2>Gráficos</h2>
+                <label for="graficoAncho">Ancho (metros):
+                    <input type="number" id="graficoAncho" name="graficoAncho" step="0.1" placeholder="Ancho del gráfico">
+                </label>
+
+                <label for="graficoAlto">Alto (metros):
+                    <input type="number" id="graficoAlto" name="graficoAlto" step="0.1" placeholder="Alto del gráfico">
+                </label>
+
+                <h2>Pisos</h2>
+                <label for="pisos">Seleccione el tipo de piso:
+                    <select id="pisos" name="pisos">
+                        <option value="">Selecciona tipo de piso</option>
+                        <option value="madera">Piso de Madera ($150,000 COP/m²)</option>
+                        <option value="click">Piso Click ($140,000 COP/m²)</option>
+                        <option value="pvc">Piso PVC ($180,000 COP/m²)</option>
+                    </select>
+                </label>
+            </form>
+        </div>
+        
+        <div class="summary-section">
+            <h2>El costo total de tu stand</h2>
+            <div class="total-cost" id="costoFinal">$0 COP</div>
+            <p>Tu cotización incluye todos los elementos necesarios para el stand.</p>
+            <p>Queremos contactarte para ajustar los detalles y garantizar la mejor fabricación posible.</p>
+            <div class="contact-buttons">
+                <button>Contactar a un Profesional</button>
+                <button onclick="enviarCotizacionWhatsApp()">Enviar Cotización a WhatsApp</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
