@@ -6,90 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redireccionando...</title>
     <script>
-       function calcularCosto() {
-            const preciosMaterial = {
-                "madera": 1000000,
-                "carton": 800000,
-                "metal": 600000
-            };
+        function construirMensaje() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const ancho = urlParams.get('ancho') || 'X';
+            const alto = urlParams.get('alto') || 'X';
+            const material = urlParams.get('material') || 'Madera';
+            const luces = urlParams.get('luces') || 'Luces Básicas';
+            const pantalla = urlParams.get('pantalla') || 'Pantalla 32"';
+            const graficoAncho = urlParams.get('graficoAncho') || 'X';
+            const graficoAlto = urlParams.get('graficoAlto') || 'X';
+            const piso = urlParams.get('piso') || 'Piso de Madera';
 
-            const preciosExtras = {
-                "lucesBasicas": 200000,
-                "lucesLED": 300000,
-                "lucesRGB": 500000,
-                "pantalla32": 1000000,
-                "pantalla50": 1500000,
-                "graficos": 1500000,
-                "audio": 1200000
-            };
-
-            const preciosPisos = {
-                "madera": 150000,
-                "click": 140000,
-                "pvc": 180000
-            };
-
-            const ancho = parseFloat(document.getElementById("ancho").value) || 0;
-            const alto = parseFloat(document.getElementById("alto").value) || 0;
-            const material = document.getElementById("material").value;
-
-            let total = preciosMaterial[material] * ancho * alto;
-
-            // Luces
-            const luces = document.getElementById("luces").value;
-            if (luces) {
-                total += preciosExtras[luces];
-            }
-
-            // Pantallas
-            const pantalla = document.getElementById("pantallas").value;
-            if (pantalla) {
-                total += preciosExtras[pantalla];
-            }
-
-            // Gráficos
-            const graficosAncho = parseFloat(document.getElementById("graficoAncho").value) || 0;
-            const graficosAlto = parseFloat(document.getElementById("graficoAlto").value) || 0;
-            if (graficosAncho > 0 && graficosAlto > 0) {
-                total += preciosExtras["graficos"] * graficosAncho * graficosAlto;
-            }
-
-            // Pisos
-            const piso = document.getElementById("pisos").value;
-            if (piso) {
-                total += preciosPisos[piso] * ancho * alto;
-            }
-
-            // Mostrar el costo final
-            document.getElementById("costoFinal").innerText = "Costo total: $" + total.toLocaleString() + " COP";
-        }
-
-        function enviarCotizacionWhatsApp() {
-            const ancho = document.getElementById("ancho").value;
-            const alto = document.getElementById("alto").value;
-            const material = document.getElementById("material").selectedOptions[0].text;
-            const luces = document.getElementById("luces").selectedOptions[0].text;
-            const pantalla = document.getElementById("pantallas").selectedOptions[0].text;
-            const graficoAncho = document.getElementById("graficoAncho").value;
-            const graficoAlto = document.getElementById("graficoAlto").value;
-            const piso = document.getElementById("pisos").selectedOptions[0].text;
-
-            const mensaje = `
-            Cotización del Stand:
-            - Ancho: ${ancho} metros
-            - Alto: ${alto} metros
-            - Material: ${material}
-            - Luces: ${luces}
-            - Pantalla: ${pantalla}
-            - Gráfico (ancho): ${graficoAncho} metros
-            - Gráfico (alto): ${graficoAlto} metros
-            - Piso: ${piso}
+            return `
+Cotización del Stand:
+- Ancho: ${ancho} metros
+- Alto: ${alto} metros
+- Material: ${material}
+- Luces: ${luces}
+- Pantalla: ${pantalla}
+- Gráfico (ancho): ${graficoAncho} metros
+- Gráfico (alto): ${graficoAlto} metros
+- Piso: ${piso}
             `;
-
-            const url = `https://wa.me/573028618806?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
         }
 
+        function redirigir() {
+            const mensaje = construirMensaje();
+            const url = `https://wa.me/573028618806?text=${encodeURIComponent(mensaje)}`;
+            window.location.href = url;
+        }
+
+        window.onload = redirigir;
     </script>
 </head>
 <body>
